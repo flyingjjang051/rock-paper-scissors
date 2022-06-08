@@ -49,13 +49,9 @@
     const comItems = document.querySelectorAll("#com ul li");
     const playerItems = document.querySelectorAll("#player ul li");
     const result = document.querySelector("#result ul");
-    console.log(realArray);
-    console.log(comItems);
-    console.log(Array.isArray(comItems)); // 유사배열
-    console.log(Array.isArray(realArray)); // 유사배열
-
-    //   es6 에 추가된 array method
+    let allStop = null;
     let random = 0;
+    let count = 0;
     const comChoice = function () {
       random = Math.floor(Math.random() * 3);
       comItems.forEach(function (item, i) {
@@ -64,17 +60,22 @@
       comItems[random].style.display = "block";
     };
     let stop = setInterval(comChoice, 30);
-
+    const restart = function () {
+      stop = setInterval(comChoice, 30);
+      playerItems.forEach(function (item, i) {
+        //item.addEventListener("click", playerChoice);
+        item.classList.remove("not");
+      });
+    };
+    const blocking = function () {
+      playerItems.forEach(function (item, i) {
+        item.classList.add("not");
+        //item.removeEventListener("click", playerChoice);
+      });
+    };
     const playerChoice = function (e) {
-      // console.log(e);
-      // console.log(e.target);
-      // console.log(this);
-      // console.log(this === e.currentTarget);
-      //com이 선택한것은 random  내가 선택한것은 this.dataset.id
-      //console.log(this.dataset.id, "====", random);
       const selected = parseInt(this.dataset.id);
       if (selected === random) {
-        //console.log("비겼습니다.");
         result.innerHTML += `<li class="draw">D</li>`;
       } else if (selected === 0 && random === 2) {
         result.innerHTML += `<li class="win">W</li>`;
@@ -83,17 +84,21 @@
       } else if (selected === 2 && random === 1) {
         result.innerHTML += `<li class="win">W</li>`;
       } else {
-        //console.log("졌습니다.");
         result.innerHTML += `<li class="lose">L</li>`;
       }
+      blocking();
       clearInterval(stop);
+      allStop = setTimeout(restart, 1000);
+      count++;
+      if (count >= 3) {
+        clearTimeout(allStop);
+      }
     };
-    console.log(playerItems[0]);
-    // playerItems[0].addEventListener("click", playerChoice);
-    // playerItems[1].addEventListener("click", playerChoice);
-    // playerItems[2].addEventListener("click", playerChoice);
     playerItems.forEach(function (item, i) {
       item.addEventListener("click", playerChoice);
     });
+
+    // clearTimeout(allStop)
+    // 변수 증가 변수가 정해진 숫자보다 커지면  clearTimeout(allStop);
   </script>
 </html>
