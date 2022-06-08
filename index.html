@@ -40,6 +40,7 @@
       </ul>
     </div>
     <div id="cover">
+      <h1>you <strong>Win</strong></h1>
       <h2>To Be <strong>Continue~~</strong></h2>
       <button id="btnRestart">restart game</button>
     </div>
@@ -51,9 +52,14 @@
     const result = document.querySelector("#result ul");
     const cover = document.querySelector("#cover");
     const restartBtn = document.querySelector("#cover button");
+    const resultTxt = document.querySelector("#cover h1");
     let allStop = null;
     let random = 0;
     let count = 0;
+    let stop = null;
+    let loseNum = 0,
+      winNum = 0,
+      drawNum = 0;
     const comChoice = function () {
       random = Math.floor(Math.random() * 3);
       comItems.forEach(function (item, i) {
@@ -61,7 +67,7 @@
       });
       comItems[random].style.display = "block";
     };
-    let stop = setInterval(comChoice, 30);
+    stop = setInterval(comChoice, 30);
     const restart = function () {
       stop = setInterval(comChoice, 30);
       playerItems.forEach(function (item, i) {
@@ -79,14 +85,19 @@
       const selected = parseInt(this.dataset.id);
       if (selected === random) {
         result.innerHTML += `<li class="draw">D</li>`;
+        drawNum++;
       } else if (selected === 0 && random === 2) {
         result.innerHTML += `<li class="win">W</li>`;
+        winNum++;
       } else if (selected === 1 && random === 0) {
         result.innerHTML += `<li class="win">W</li>`;
+        winNum++;
       } else if (selected === 2 && random === 1) {
         result.innerHTML += `<li class="win">W</li>`;
+        winNum++;
       } else {
         result.innerHTML += `<li class="lose">L</li>`;
+        loseNum++;
       }
       blocking();
       clearInterval(stop);
@@ -95,12 +106,21 @@
       if (count >= 3) {
         clearTimeout(allStop);
         cover.classList.add("on");
+        console.log(drawNum, "===", winNum, "===", loseNum);
+        if (drawNum === 3 || (drawNum === 1 && winNum === 1 && loseNum === 1)) {
+          resultTxt.innerHTML = "you <strong>Draw</strong>";
+        } else if (winNum >= 2 || (winNum === 1 && drawNum === 2)) {
+          resultTxt.innerHTML = "you <strong>Win</strong>";
+        } else {
+          resultTxt.innerHTML = "you <strong>Lose</strong>";
+        }
       }
     };
     const restartGame = function () {
       cover.classList.remove("on");
       result.innerHTML = "";
       count = 0;
+      drawNum = loseNum = winNum = 0;
       restart();
     };
     playerItems.forEach(function (item, i) {
