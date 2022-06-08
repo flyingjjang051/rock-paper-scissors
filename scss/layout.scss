@@ -1,118 +1,87 @@
 @import "vars";
-@import "mixins";
-
-img {
-  vertical-align: top;
+@import "mixin";
+html {
 }
-.wrap {
+body {
+  font-family: "Roboto", "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  color: #111;
+  // prettier-ignore
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05), 
+                                                     rgba(255, 255, 255, 0.05) 1px, 
+                                                       0, transparent 50px);
+  background-color: #333;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#header {
+  height: 60px;
+  background-color: #fff;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   h1 {
-    font-size: 32px;
-    margin: 100px 0;
-    text-align: center;
-    span {
-      display: block;
-      &.sub {
-        font-size: 20px;
-        margin-top: 20px;
+    font-weight: 300;
+    font-size: 18px;
+    @include longShadow(#ccc, 50);
+    text-transform: uppercase;
+    strong {
+      font-weight: 700;
+    }
+  }
+}
+
+#com {
+  margin-top: 100px;
+  ul {
+    display: flex;
+    justify-content: center;
+  }
+}
+#player {
+  margin-top: 50px;
+  ul {
+    display: flex;
+    justify-content: center;
+    li {
+      margin: 0 10px;
+      img {
+        width: 80px;
       }
     }
   }
-  #com {
-    margin-bottom: 50px;
-    ul {
-      display: flex;
-      li {
-        user-select: none;
-      }
-    }
-  }
-  #player {
-    ul {
-      display: flex;
-      &.prevent {
-        pointer-events: none;
-      }
-      li {
-        margin: 0 10px;
-        border: 5px solid transparent;
-        border-radius: 100%;
-        user-select: none;
-        &.on {
-          border-color: #000;
-        }
-        img {
-          width: 80px;
-        }
-      }
-    }
-  }
-  #result {
-    margin-top: 50px;
-    ul {
+}
+#result {
+  margin-top: 50px;
+  ul {
+    display: flex;
+    justify-content: center;
+    li {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
       display: flex;
       justify-content: center;
-      li {
-        width: 40px;
-        height: 40px;
-        color: #fff;
-        border-radius: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        margin: 0 5px;
-        &.win {
-          background-color: rgb(3, 116, 207);
-          @include longShadow(darken(rgb(3, 116, 207), 20), right, 40);
-        }
-        &.lose {
-          background-color: rgb(243, 49, 0);
-          @include longShadow(darken(rgb(243, 49, 0), 20), right, 40);
-        }
-        &.draw {
-          background-color: rgb(97, 97, 97);
-          @include longShadow(darken(rgb(97, 97, 97), 20), right, 40);
-        }
+      align-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 20px;
+      margin: 0 5px;
+      &.win {
+        background-color: rgb(4, 132, 218);
       }
-    }
-  }
-}
-
-#cover {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 99;
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  h2 {
-    font-size: 32px;
-    color: #fff;
-    margin-bottom: 50px;
-  }
-  button {
-    padding: 30px 60px;
-    border: none;
-    outline: none;
-    background-color: rgb(224, 127, 0);
-    overflow: hidden;
-    border-radius: 10px;
-    font-size: 20px;
-    text-transform: uppercase;
-    color: #fff;
-    box-shadow: 0 10px 0 darken(rgb(224, 127, 0), 10);
-    transition: 0.1s ease;
-    &:active {
-      transform: translateY(10px);
-      box-shadow: 0 0 0 darken(rgb(224, 127, 0), 10);
+      &.lose {
+        background-color: rgb(233, 57, 13);
+      }
+      &.draw {
+        background-color: rgb(105, 105, 105);
+      }
     }
   }
 }
