@@ -40,7 +40,7 @@
       </ul>
     </div>
     <div id="cover">
-      <h2>To Be Continue~~</h2>
+      <h2>To Be <strong>Continue~~</strong></h2>
       <button id="btnRestart">restart game</button>
     </div>
   </body>
@@ -49,6 +49,8 @@
     const comItems = document.querySelectorAll("#com ul li");
     const playerItems = document.querySelectorAll("#player ul li");
     const result = document.querySelector("#result ul");
+    const cover = document.querySelector("#cover");
+    const restartBtn = document.querySelector("#cover button");
     let allStop = null;
     let random = 0;
     let count = 0;
@@ -92,12 +94,19 @@
       count++;
       if (count >= 3) {
         clearTimeout(allStop);
+        cover.classList.add("on");
       }
+    };
+    const restartGame = function () {
+      cover.classList.remove("on");
+      result.innerHTML = "";
+      count = 0;
+      restart();
     };
     playerItems.forEach(function (item, i) {
       item.addEventListener("click", playerChoice);
     });
-
+    restartBtn.addEventListener("click", restartGame);
     // clearTimeout(allStop)
     // 변수 증가 변수가 정해진 숫자보다 커지면  clearTimeout(allStop);
   </script>
