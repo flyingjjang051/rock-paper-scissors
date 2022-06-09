@@ -42,6 +42,12 @@ a {
   ul {
     display: flex;
     justify-content: center;
+    li {
+      display: none;
+      &:nth-child(1) {
+        display: block;
+      }
+    }
   }
 }
 #player {
@@ -51,8 +57,10 @@ a {
     justify-content: center;
     li {
       margin: 0 10px;
+      transition: opacity 0.5s ease;
       &.not {
         pointer-events: none;
+        opacity: 0.5;
       }
       img {
         width: 80px;
@@ -145,6 +153,7 @@ a {
     overflow: hidden;
     border: none;
     box-shadow: 0 12px 0 darken(rgb(243, 148, 6), 10);
+    @include longShadow(darken(rgb(243, 148, 6), 15), 52);
     &:active {
       transform: translateY(12px);
       box-shadow: none;

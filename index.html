@@ -53,15 +53,16 @@
     const cover = document.querySelector("#cover");
     const restartBtn = document.querySelector("#cover button");
     const resultTxt = document.querySelector("#cover h1");
-    let allStop = null;
-    let random = 0;
-    let count = 0;
-    let stop = null;
-    let loseNum = 0,
-      winNum = 0,
-      drawNum = 0;
+    let allStop = null; // count>=3   전체 진행을 멈추는 변수
+    let random = 0; //0 rock, 1 paper, 2  scissors
+    let count = 0; // 게임 진행 1,2,3
+    let stop = null; //  아래쪽 작은 가위바위보 눌렀을때 멈추는 변수
+    let loseNum = 0;
+    let winNum = 0;
+    let drawNum = 0;
     const comChoice = function () {
-      random = Math.floor(Math.random() * 3);
+      random = Math.floor(Math.random() * 3); // 0,1,2
+      // iterable, map, reduce, filter,find,every 등등
       comItems.forEach(function (item, i) {
         item.style.display = "none";
       });
@@ -71,14 +72,12 @@
     const restart = function () {
       stop = setInterval(comChoice, 30);
       playerItems.forEach(function (item, i) {
-        //item.addEventListener("click", playerChoice);
         item.classList.remove("not");
       });
     };
     const blocking = function () {
       playerItems.forEach(function (item, i) {
         item.classList.add("not");
-        //item.removeEventListener("click", playerChoice);
       });
     };
     const playerChoice = function (e) {
@@ -86,13 +85,7 @@
       if (selected === random) {
         result.innerHTML += `<li class="draw">D</li>`;
         drawNum++;
-      } else if (selected === 0 && random === 2) {
-        result.innerHTML += `<li class="win">W</li>`;
-        winNum++;
-      } else if (selected === 1 && random === 0) {
-        result.innerHTML += `<li class="win">W</li>`;
-        winNum++;
-      } else if (selected === 2 && random === 1) {
+      } else if ((selected === 0 && random === 2) || (selected === 1 && random === 0) || (selected === 2 && random === 1)) {
         result.innerHTML += `<li class="win">W</li>`;
         winNum++;
       } else {
@@ -101,7 +94,7 @@
       }
       blocking();
       clearInterval(stop);
-      allStop = setTimeout(restart, 1000);
+      allStop = setTimeout(restart, 1000); //
       count++;
       if (count >= 3) {
         clearTimeout(allStop);
@@ -129,5 +122,9 @@
     restartBtn.addEventListener("click", restartGame);
     // clearTimeout(allStop)
     // 변수 증가 변수가 정해진 숫자보다 커지면  clearTimeout(allStop);
+
+    document.addEventListener("click", function (e) {
+      console.log(e.currentTarget);
+    });
   </script>
 </html>
